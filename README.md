@@ -2,12 +2,12 @@
 
 **An Explainable Hybrid Machine Learning Framework for Smart Pharmaceutical Manufacturing and Intelligent Quality Control**
 
-PharmaGuard AI is a student project with two independent machine learning modules. The Smart Manufacturing module implements an AI4I 2020 binary failure-classification workflow. The tablet image quality-control module remains a placeholder. Machine data and tablet images are kept separate and are not assumed to belong to shared batches.
+PharmaGuard AI is a student project with two independent machine learning modules. The Smart Manufacturing module implements an AI4I 2020 binary failure-classification workflow. The Tablet Quality Control module trains a custom CNN and pretrained MobileNetV2 on PharmaVision. Machine data and tablet images are kept separate and are not assumed to belong to shared batches.
 
 ## Project modules
 
 1. **Smart manufacturing:** uses the AI4I 2020 Predictive Maintenance Dataset with Logistic Regression, Random Forest, and XGBoost; it writes evaluation plots/metrics and SHAP explanations from actual downloaded data.
-2. **Pharmaceutical quality control:** planned tablet image preprocessing and augmentation, a CNN and MobileNetV2 comparison, classification evaluation, and Grad-CAM explanations.
+2. **Pharmaceutical quality control:** trains a custom CNN and pretrained MobileNetV2 on the official fixed PharmaVision splits, with evaluation reports and Grad-CAM image explanations.
 
 The modules use separate data, models, and reports. No relationship between their samples or production batches is assumed.
 
@@ -15,16 +15,16 @@ The modules use separate data, models, and reports. No relationship between thei
 
 ```text
 PharmaGuard-AI/
-├── app/                         # Streamlit dashboard placeholders
+├── app/                         # Integrated Streamlit pages and shared helpers
 ├── data/
 │   ├── smart_manufacturing/     # raw/ and processed/ machine data
-│   └── quality_control/         # raw/ and processed/ tablet images
+│   └── quality_control/         # PharmaVision original splits
 ├── models/
-│   ├── smart_manufacturing/     # future machine model artifacts
-│   └── quality_control/         # future image model artifacts
+│   ├── smart_manufacturing/     # saved machine pipelines and metadata
+│   └── quality_control/         # trained tablet model checkpoints
 ├── reports/
-│   ├── smart_manufacturing/     # future metrics and plots
-│   └── quality_control/         # future metrics and plots
+│   ├── smart_manufacturing/     # actual saved metrics, plots, SHAP
+│   └── quality_control/         # actual tablet metrics, plots, Grad-CAM
 ├── src/
 │   ├── smart_manufacturing/     # preprocessing, models, evaluation, explainability
 │   └── quality_control/         # preprocessing, models, evaluation, explainability
@@ -65,17 +65,47 @@ Run the focused checks after training with:
 python -m unittest discover -s tests -v
 ```
 
+### Tablet Quality Control training
+
+From the repository root, run:
+
+```powershell
+python -m src.quality_control.train
+```
+
+The command downloads PharmaVision from Zenodo record 22773411 into `data/quality_control/raw/`, verifies the archive checksum, extracts the original Train/Val/Test splits, and checks the published 190/30/100 images per class. It trains a custom CNN and an ImageNet-pretrained MobileNetV2 with 224x224 inputs. Only training images are augmented; validation and test images are resized and normalized without augmentation. The best validation-loss checkpoint is saved for each model. Reports, metrics, plots, and an example Grad-CAM overlay are written to `reports/quality_control/`.
+
+PyTorch uses CUDA when available; training retries on CPU if CUDA training fails. MobileNetV2's pretrained weights must be downloadable on the first run. If no supported RAR extractor is available, install bsdtar or 7-Zip before running.
+
+Run both modules' tests after training with:
+
+```powershell
+python -m unittest discover -s tests -v
+```
+
+### Dashboard
+
+After installing the dependencies and ensuring the saved model checkpoints are available, start the integrated dashboard from the repository root:
+
+```powershell
+python -m streamlit run app/app.py
+```
+
+The sidebar opens five views: Home Dashboard, Smart Manufacturing, Tablet Quality Control, Explainable AI, and Model Performance. The machine page accepts the six AI4I input features and uses a selected saved pipeline. The tablet page accepts a JPEG, PNG, WebP, BMP, or TIFF image (up to 10 MB and 20 megapixels) and uses the saved recommended MobileNetV2 checkpoint. SHAP explanations use the saved training partition as their background; tablet image explanations use Grad-CAM. Model metrics and plots are read from `reports/` and are not recalculated by the dashboard.
+
+The dashboard does not train models or download datasets. If a model or report is missing, it displays an error indicating which artifact is unavailable. For fresh environments, follow the module setup/training commands above to create these local artifacts before launching.
+
 ### Current scope
 
-`predict_machine()` loads the recommended saved pipeline after training. The Smart Manufacturing model is a binary classifier for the dataset's recorded `Machine failure` label; it is not a remaining-useful-life model or a guarantee of future failure forecasting. The tablet quality-control code and Streamlit pages remain placeholders and are not yet a connected dashboard.
+`predict_machine()` and `predict_tablet()` load their own module-specific saved models after training. Smart Manufacturing classifies the dataset's recorded `Machine failure` label; it is not a remaining-useful-life model. Tablet predictions and Grad-CAM describe visible image patterns only. They do not verify chemical composition, medicine identity, dosage, pharmaceutical quality, or patient safety. The dashboard is a research prototype and its predictions should not replace validated manufacturing controls or qualified review.
 
 ## Prediction interfaces
 
 - `src.smart_manufacturing.predict_machine(input_data)` loads the recommended saved Smart Manufacturing pipeline and returns a failure class, probability, and validation-selected threshold. Run the training command above first.
-- `src.quality_control.predict_tablet(image)` remains a placeholder and raises `NotImplementedError` until a real image model and preprocessing pipeline are implemented.
+- `src.quality_control.predict_tablet(image)` returns a Normal/Defective class, confidence, and Grad-CAM image after the tablet training command creates its checkpoints.
 
-## Next steps
+## Dashboard limitations
 
-1. Connect the verified Smart Manufacturing predictor and its reports to the Streamlit machine page.
-2. Implement the independent tablet-image dataset, preprocessing, training, evaluation, prediction, and Grad-CAM workflow when authorized.
-3. Add automated checks and setup guidance for clean environment installs and dashboard integration.
+- The dashboard expects the saved model files and evaluation reports generated by each module's training pipeline to exist locally.
+- Smart Manufacturing predictions estimate the dataset's machine-failure class from user-entered sensor values; a non-failure result is not a guarantee.
+- Tablet classification is based on visible image patterns and may be affected by lighting, camera, tablet type, and image quality.

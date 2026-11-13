@@ -1,0 +1,57 @@
+{
+  "dataset": "PharmaVision (PV), Zenodo record 22773411",
+  "dataset_root": "raw\\PharmaVision\\PharmaVision",
+  "dataset_archive_sha256": "358190ce919baf3e2ff63560563a7b099310d79b798dbbd85f831cbc0e400f25",
+  "class_names": [
+    "Normal",
+    "Defective"
+  ],
+  "positive_class": "Defective",
+  "image_size": 224,
+  "normalization": {
+    "mean": [
+      0.485,
+      0.456,
+      0.406
+    ],
+    "std": [
+      0.229,
+      0.224,
+      0.225
+    ]
+  },
+  "random_state": 42,
+  "training_device": {
+    "custom_cnn": "cuda",
+    "mobilenet_v2": "cuda"
+  },
+  "recommended_model": "mobilenet_v2",
+  "model_files": {
+    "custom_cnn": "custom_cnn_best.pth",
+    "mobilenet_v2": "mobilenet_v2_best.pth"
+  },
+  "best_epochs": {
+    "custom_cnn": 7,
+    "mobilenet_v2": 21
+  },
+  "package_versions": {
+    "torch": "2.14.1+cu130",
+    "torchvision": "0.29.1+cu130",
+    "pillow": "13.0.0",
+    "scikit-learn": "1.9.1"
+  },
+  "dataset_summary": {
+    "test": {
+      "defective": 100,
+      "normal": 100
+    },
+    "train": {
+      "defective": 190,
+      "normal": 190
+    },
+    "validation": {
+      "defective": 30,
+      "normal": 30
+    }
+  }
+}

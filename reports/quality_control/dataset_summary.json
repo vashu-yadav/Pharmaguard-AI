@@ -1,0 +1,17 @@
+{
+  "root": "C:\\Users\\VASHU YADAV\\Desktop\\PharmaGuard-AI\\data\\quality_control\\raw\\PharmaVision\\PharmaVision",
+  "splits": {
+    "test": {
+      "defective": 100,
+      "normal": 100
+    },
+    "train": {
+      "defective": 190,
+      "normal": 190
+    },
+    "validation": {
+      "defective": 30,
+      "normal": 30
+    }
+  }
+}
