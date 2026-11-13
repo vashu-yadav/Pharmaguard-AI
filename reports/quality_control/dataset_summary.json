@@ -1,5 +1,5 @@
 {
-  "root": "C:\\Users\\VASHU YADAV\\Desktop\\PharmaGuard-AI\\data\\quality_control\\raw\\PharmaVision\\PharmaVision",
+  "root": "data/quality_control/raw/PharmaVision/PharmaVision",
   "splits": {
     "test": {
       "defective": 100,

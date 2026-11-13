@@ -1,13 +1,21 @@
-﻿streamlit
-pandas
-numpy
-scikit-learn
-xgboost
-shap
-matplotlib
-seaborn
-Pillow
-torch
-torchvision
-opencv-python-headless
-joblib
+# Python 3.12 deployment/runtime dependencies.
+# Linux (Streamlit Community Cloud) uses CPU-only PyTorch; Windows uses the
+# project's CUDA 13.0 build. Other application dependencies are pinned to the
+# versions used to produce the saved models and reports.
+--extra-index-url https://download.pytorch.org/whl/cpu
+--extra-index-url https://download.pytorch.org/whl/cu130
+
+streamlit==1.67.0
+numpy==2.5.4
+pandas==3.1.1
+scikit-learn==1.9.1
+xgboost==3.4.1
+shap==0.54.1
+matplotlib==3.11.2
+Pillow==13.0.0
+joblib==1.6.0
+
+torch==2.14.1+cpu ; platform_system == "Linux"
+torchvision==0.29.1+cpu ; platform_system == "Linux"
+torch==2.14.1+cu130 ; platform_system == "Windows"
+torchvision==0.29.1+cu130 ; platform_system == "Windows"

@@ -1,6 +1,6 @@
 {
   "dataset": "PharmaVision (PV), Zenodo record 22773411",
-  "dataset_root": "raw\\PharmaVision\\PharmaVision",
+  "dataset_root": "raw/PharmaVision/PharmaVision",
   "dataset_archive_sha256": "358190ce919baf3e2ff63560563a7b099310d79b798dbbd85f831cbc0e400f25",
   "class_names": [
     "Normal",

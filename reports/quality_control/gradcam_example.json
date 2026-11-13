@@ -1,7 +1,7 @@
 {
   "image": "gradcam_example.png",
   "details": "gradcam_example.json",
-  "source_image": "C:\\Users\\VASHU YADAV\\Desktop\\PharmaGuard-AI\\data\\quality_control\\raw\\PharmaVision\\PharmaVision\\Test\\defective\\1.jpeg",
+  "source_image": "data/quality_control/raw/PharmaVision/PharmaVision/Test/defective/1.jpeg",
   "actual_class": "Defective",
   "predicted_class": "Defective",
   "confidence": 0.9619286060333252,

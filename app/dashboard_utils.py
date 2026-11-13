@@ -40,7 +40,13 @@ def load_smart_pipeline(model_name: str):
     model_path = SMART_MODELS / model_files[model_name]
     if not model_path.is_file():
         raise FileNotFoundError(f"Saved machine pipeline is missing: {model_path}")
-    return joblib.load(model_path)
+    pipeline = joblib.load(model_path)
+    classifier = pipeline.named_steps.get("classifier")
+    if classifier is not None and classifier.__class__.__module__.startswith("xgboost"):
+        # Cloud inference and SHAP should use CPU even if this pipeline was
+        # originally trained with CUDA on Windows.
+        classifier.set_params(device="cpu")
+    return pipeline
 
 
 @st.cache_data(show_spinner=False)

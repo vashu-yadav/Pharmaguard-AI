@@ -59,10 +59,10 @@
     "joblib": "1.6.0"
   },
   "shap_reports": {
-    "summary_plot": "C:\\Users\\VASHU YADAV\\Desktop\\PharmaGuard-AI\\reports\\smart_manufacturing\\shap\\shap_summary.png",
-    "global_importance_plot": "C:\\Users\\VASHU YADAV\\Desktop\\PharmaGuard-AI\\reports\\smart_manufacturing\\shap\\shap_global_importance.png",
-    "importance_csv": "C:\\Users\\VASHU YADAV\\Desktop\\PharmaGuard-AI\\reports\\smart_manufacturing\\shap\\shap_feature_importance.csv",
-    "individual_plot": "C:\\Users\\VASHU YADAV\\Desktop\\PharmaGuard-AI\\reports\\smart_manufacturing\\shap\\shap_individual_explanation.png",
-    "individual_details": "C:\\Users\\VASHU YADAV\\Desktop\\PharmaGuard-AI\\reports\\smart_manufacturing\\shap\\shap_individual_explanation.json"
+    "summary_plot": "reports/smart_manufacturing/shap/shap_summary.png",
+    "global_importance_plot": "reports/smart_manufacturing/shap/shap_global_importance.png",
+    "importance_csv": "reports/smart_manufacturing/shap/shap_feature_importance.csv",
+    "individual_plot": "reports/smart_manufacturing/shap/shap_individual_explanation.png",
+    "individual_details": "reports/smart_manufacturing/shap/shap_individual_explanation.json"
   }
 }

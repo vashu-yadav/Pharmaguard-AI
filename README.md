@@ -29,7 +29,7 @@ PharmaGuard-AI/
 │   ├── smart_manufacturing/     # preprocessing, models, evaluation, explainability
 │   └── quality_control/         # preprocessing, models, evaluation, explainability
 ├── AGENTS.md                    # project-specific development guidance
-└── requirements.txt             # planned Python dependencies
+└── requirements.txt             # pinned dashboard and model runtime dependencies
 ```
 
 ## Windows and VS Code setup
@@ -94,6 +94,12 @@ python -m streamlit run app/app.py
 The sidebar opens five views: Home Dashboard, Smart Manufacturing, Tablet Quality Control, Explainable AI, and Model Performance. The machine page accepts the six AI4I input features and uses a selected saved pipeline. The tablet page accepts a JPEG, PNG, WebP, BMP, or TIFF image (up to 10 MB and 20 megapixels) and uses the saved recommended MobileNetV2 checkpoint. SHAP explanations use the saved training partition as their background; tablet image explanations use Grad-CAM. Model metrics and plots are read from `reports/` and are not recalculated by the dashboard.
 
 The dashboard does not train models or download datasets. If a model or report is missing, it displays an error indicating which artifact is unavailable. For fresh environments, follow the module setup/training commands above to create these local artifacts before launching.
+
+### Streamlit Community Cloud deployment
+
+The app entry point is `app/app.py`. The root `requirements.txt` pins the versions used by the saved model artifacts. Select **Python 3.12** in Community Cloud's app advanced settings. The dependency file selects CPU-only PyTorch wheels on Linux and keeps the CUDA 13.0 PyTorch wheels for Windows development. Community Cloud does not need a GPU for inference.
+
+Create the Community Cloud app using this repository, the `main` branch, and `app/app.py` as the entry point. The app reads models and reports already stored in the repository. It does not extract or load the PharmaVision archive during startup, and inference does not download pretrained weights or datasets.
 
 ### Current scope
 
