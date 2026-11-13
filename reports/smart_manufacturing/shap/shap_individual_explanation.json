@@ -1,0 +1,17 @@
+{
+  "test_row_index": "9830",
+  "actual_machine_failure": 1,
+  "predicted_failure_probability": 0.9638893008232117,
+  "base_value": 0.04373838343992247,
+  "feature_contributions": {
+    "Air temperature [K]": -0.014663983771333718,
+    "Process temperature [K]": 0.010308985436422545,
+    "Rotational speed [rpm]": 0.14938901053110382,
+    "Torque [Nm]": 0.39716818038496055,
+    "Tool wear [min]": 0.33272824294133896,
+    "Type_H": 0.0008065538005030196,
+    "Type_L": 0.03932432253021034,
+    "Type_M": 0.0050896055300836286
+  },
+  "explanation_output": "failure probability"
+}

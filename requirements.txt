@@ -9,3 +9,5 @@ seaborn
 Pillow
 torch
 torchvision
+opencv-python-headless
+joblib
